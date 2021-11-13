@@ -22,17 +22,29 @@ This is the part that is loaded into the user's browser and runs on their machin
 I will try to give examples of all three. 
 
 Todo: 
+
 - [ ] Angular Example
 - [ ] React Example
 - [ ] Vue Example
+- [ ] Deployed
 
 ### Back end
 
 This is the part that the front end talks to. It's where it gets information and sends updates. It's also the bridge to the persistence, or database layer. We will use [Node](https://nodejs.org/), which is backend javascript, so we can use the same language that we use on the front end. 
 
+Todo: 
+
+- [ ] Node example
+- [ ] Deployed
+
 ### Persistence/Database
 
 This is where information persists between sessions with your app. We will use [Dynamo](https://aws.amazon.com/dynamodb), which is a [no-sql database](https://en.wikipedia.org/wiki/NoSQL), to avoid the complication of learning how [relational databases](https://en.wikipedia.org/wiki/Relational_database) (sql databases) work. 
+
+Todo: 
+
+- [ ] Dynamo example
+- [ ] Deployed
 
 ### Deployment process
 
@@ -49,6 +61,10 @@ To deploy on AWS, we have a few options:
 - [AWS CDK](https://docs.aws.amazon.com/cdk/latest/guide/home.html)
   - A way of deploying your stack with code, which is currently my preferred way to deploy
   - Why? Deployments get complicated no matter which method you use. Being able to use Javascript to write my deployment allows me to avoid complicating my deployment using yet again other process, such as bash scripts (a linux thing). Simple deployments stay simple, but complicated deployments are easier to do with CDK than with the other options above. 
+
+Todo
+
+- [ ] CDK example
 
 ### Typescript
 
