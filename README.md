@@ -69,3 +69,67 @@ Todo
 ### Typescript
 
 [Typescript](https://www.typescriptlang.org/) is a layer on top of Javascript, which makes code much easier to write, to refactor (change), and to understand, even without having to run it. In all the places I've mentioned Javascript above, we will actually be using Typescript, which looks exactly the same, except you declare what types you're using. For example: `let x = 3;` would result in `x` having the type of `number`. Trying to assign `x = 'hello'` later would result in a type error that you would see immediately. 
+
+## What does the stack look like?
+
+### Front end
+
+When you browse to a website, a few things happen: 
+
+1. DNS resolution: Your computer uses a DNS service, typically provided by your ISP (Verizon, Comcast, etc), to convert the address to an IP address. For example, [google.com](google.com) becomes `172.217.0.46` 
+2. GET call on the server: Your computer will make a GET request on the server at that location, on port 443 (for secure websites that start with https://, which is most these days ) or port 80 (for insecure websites that start with http://). Ports are just a way of computers allowing communication for more than one type of thing. There are many ports, and these are the main two most people care about. 
+3. If making a secure call on port 443, there is a process beyond the scope of this tutorial, where you will use a copy of the public key (provided by your browser) as a way of verifying the private key of this site, to ensure that the computer you're talking to is the one that owns that site. This is to eliminate a man-in-the-middle attack, where a malicious site could somehow pretend to be, say, google.com. This is why it's important to only use https sites these days, so that you know that you're communicating with the site you think you are. 
+4. Your browser will now download the html from that server, and any css or js referenced in that html. 
+
+#### Html
+
+Html is the text on the page, and references to any more interesting stuff
+
+```html
+<html>
+  <head>
+    <title>Basic page</title> <!-- Title of the page that shows up in the tab at the top -->
+    <script src=".app.js"></script> <!-- Reference to some javascript, which will make the page "do stuff" -->
+  </head>
+  <body>
+    <!-- The body of the page you see in your browser window -->
+    This is what a bare-bones html page looks like
+  </body>
+</html>
+```
+
+#### Javascript
+
+Javascript is code. It will look like this: 
+
+```javascript
+var car = {
+    startEngine: function () {
+        console.log("Car started");             
+    }        
+}
+  
+car.startEngine();
+```
+
+Or Javascript will look different. We will use a more mature language to build our website, and it will changed into regular javascript that runs on the page with a transpiler. Our javascript will also be communicating with our back end layer.
+
+TODO: Give a quick http call example here to warm them up to the concept. 
+
+#### Cascading StyleSheet
+
+CSS is a way of changing the visuals of your site, without making the HTML too messy. For example, to make the text in the html example above red, I can reference a file in my html with this: 
+
+```css
+body {
+  text: red;
+}
+```
+
+### Back end
+
+The back end will wait for request from the front end to do stuff. This is typically some kind of CRUD operation (Create, Read, Update, Delete). CRUD operations touch the backend, which persists. 
+
+### Persistence
+
+This part will not include code. You'll set up your DB, and connect to it from your back end. 
