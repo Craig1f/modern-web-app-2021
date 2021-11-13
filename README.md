@@ -133,3 +133,18 @@ The back end will wait for request from the front end to do stuff. This is typic
 ### Persistence
 
 This part will not include code. You'll set up your DB, and connect to it from your back end. 
+
+## Man, this is so interesting! Tell me more. How do I literally do this?
+
+TODO: 
+
+- [ ] Start with cdk
+- [ ] Deploy dynamo
+- [ ] Deploy a simple CRUD layer in lambda using node
+- [ ] Add api gateway
+- [ ] Add 3 s3 buckets for front end examples
+- [ ] Create Angular hello world
+- [ ] Create Vue hello world
+- [ ] Create React hello world
+- [ ] Profit
+
