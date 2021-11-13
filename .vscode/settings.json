@@ -1,0 +1,20 @@
+{
+    "editor.formatOnSave": true,
+    "[typescript]": {
+        "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": true
+        },
+        "editor.formatOnSave": false
+    },
+    "[json]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": true
+        },
+        "editor.formatOnSave": false
+    },
+    "javascript.preferences.quoteStyle": "single",
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "typescript.preferences.quoteStyle": "single"
+}

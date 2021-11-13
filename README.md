@@ -138,13 +138,25 @@ This part will not include code. You'll set up your DB, and connect to it from y
 
 TODO: 
 
-- [ ] Start with cdk
-- [ ] Deploy dynamo
-- [ ] Deploy a simple CRUD layer in lambda using node
-- [ ] Add api gateway
+- [x] Start with cdk
+- [x] Deploy dynamo
+- [x] Deploy hello world lambdas and API Gateway
+- [ ] Iterate lambdas to touch Dynamo
 - [ ] Add 3 s3 buckets for front end examples
 - [ ] Create Angular hello world
 - [ ] Create Vue hello world
 - [ ] Create React hello world
 - [ ] Profit
 
+Actual steps: 
+
+<!-- TODO: Add explanations for why -->
+
+- Use cloud9 so you have access to basic development tools
+- `npm i aws-cdk`
+- `npx cdk init sample-app typescript`
+- `npm install eslint --save-dev`
+- `npx eslint --init`
+- `npm i @aws-cdk/aws-dynamodb --save-dev`
+- `npx cdk deploy`
+- Verified dynamo db table in aws account
