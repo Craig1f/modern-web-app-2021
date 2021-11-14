@@ -34,8 +34,8 @@ This is the part that the front end talks to. It's where it gets information and
 
 Todo: 
 
-- [ ] Node example
-- [ ] Deployed
+- [x] Node example
+- [x] Deployed
 
 ### Persistence/Database
 
@@ -43,8 +43,8 @@ This is where information persists between sessions with your app. We will use [
 
 Todo: 
 
-- [ ] Dynamo example
-- [ ] Deployed
+- [x] Dynamo example
+- [x] Deployed
 
 ### Deployment process
 
@@ -141,7 +141,7 @@ TODO:
 - [x] Start with cdk
 - [x] Deploy dynamo
 - [x] Deploy hello world lambdas and API Gateway
-- [ ] Iterate lambdas to touch Dynamo
+- [x] Iterate lambdas to touch Dynamo
 - [ ] Add 3 s3 buckets for front end examples
 - [ ] Create Angular hello world
 - [ ] Create Vue hello world

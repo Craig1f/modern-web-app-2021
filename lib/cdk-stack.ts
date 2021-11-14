@@ -22,20 +22,26 @@ export class CdkStack extends cdk.Stack {
       runtime: lambda.Runtime.NODEJS_12_X,
       handler: 'lambdas/dynamo-table-get.handler',
       code: lambda.Code.fromAsset('resources'),
+      environment: {
+        TABLE_NAME: table.tableName,
+      },
     });
 
-    const handlerPost = new lambda.Function(this, 'PostDynamoValue', {
+    const handlerSet = new lambda.Function(this, 'SetDynamoValue', {
       runtime: lambda.Runtime.NODEJS_12_X,
-      handler: 'lambdas/dynamo-table-post.handler',
+      handler: 'lambdas/dynamo-table-set.handler',
       code: lambda.Code.fromAsset('resources'),
+      environment: {
+        TABLE_NAME: table.tableName,
+      },
     });
 
     // Gives the lambda permission to read and write from the table.
     table.grantReadData(handlerGet);
-    table.grantReadWriteData(handlerPost);
+    table.grantReadWriteData(handlerSet);
 
     // eslint-disable-next-line no-console
-    console.log('Lambda', handlerGet, handlerPost);
+    console.log('Lambda', handlerGet, handlerSet);
 
     const api = new apigw.RestApi(this, 'api', {
       description: 'example api gateway',
@@ -58,13 +64,17 @@ export class CdkStack extends cdk.Stack {
 
     // 👇 add a /todos resource
     const tableRoute = api.root.addResource('table');
-    tableRoute.addMethod(
-      'POST',
-      new apigw.LambdaIntegration(handlerPost, { proxy: true }),
-    );
+
     tableRoute.addMethod(
       'GET',
       new apigw.LambdaIntegration(handlerGet, { proxy: true }),
+    );
+
+    // Pass an id to this route
+    const tableByIdRoute = tableRoute.addResource('{id}');
+    tableByIdRoute.addMethod(
+      'PUT',
+      new apigw.LambdaIntegration(handlerSet, { proxy: true }),
     );
   }
 }
