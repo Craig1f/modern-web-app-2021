@@ -1,15 +1,27 @@
 # modern-web-app-2021
 Basics for a modern web app. This is a highly-opinionated repository. But I try to back my opinions up. 
 
+## Quick Start
+
+TODO: Elaborate on this list
+- Explain steps
+- Spin up a cloud9 instance so you have tools you need, and we don't need to teach people to install node/npm/awscli/etc
+- [Set up ssh keys](https://docs.github.com/en/authentication/connecting-to-github-with-ssh) in cloud9 to connect to git
+- Clone this repo from git
+
+TODO: Consider a BLUF (bottom line up front). Just get users into cloud 9, and deploy the stack. Show them the app running. Now they have something they can visualize that is familiar. A web page that does "stuff". Now work backwards, and describe the parts that they can see, so they don't have to use extra energy to visualize. 
+
+## Describing the software stack
+
 A modern web, running on [AWS](https://aws.amazon.com/), has these main parts: 
 
 ### Repository
 
-That's this git repo right here! Learn to clone using [ssh keys](https://docs.github.com/en/authentication/connecting-to-github-with-ssh): 
+That's this git repo right here! Learn to clone using [ssh keys](https://docs.github.com/en/authentication/connecting-to-github-with-ssh).
 
 ### Front end
 
-This is the part that is loaded into the user's browser and runs on their machine. Think html, javascript, and css. We will use one of the main modern frameworks for this: [Angular](https://angular.io/), [React](https://reactjs.org/), and [Vue](https://vuejs.org/). 
+This is the part that is loaded into the user's browser and runs on their machine. Think html, javascript, and css. We will use one of the main modern frameworks for this: [Angular](https://angular.io/), [React](https://reactjs.org/), and [Vue](https://vuejs.org/). These are SPAs (Single Page Apps). This means that they run in your browser, like a typical desktop app, and react to changes on-the-fly. This is different from tranditional web pages, in which each click would cause a navigation, and a complete reload of html/css/js. SPAs are fast and more visually satisfying than traditional websites. 
 
 [Angular](https://angular.io/) is a product of Google, and started the Single Page Application revolution. 
 
@@ -70,6 +82,8 @@ Todo
 
 [Typescript](https://www.typescriptlang.org/) is a layer on top of Javascript, which makes code much easier to write, to refactor (change), and to understand, even without having to run it. In all the places I've mentioned Javascript above, we will actually be using Typescript, which looks exactly the same, except you declare what types you're using. For example: `let x = 3;` would result in `x` having the type of `number`. Trying to assign `x = 'hello'` later would result in a type error that you would see immediately. 
 
+Typescript is becoming more and more popular, and will improve your quality. 
+
 ## What does the stack look like?
 
 ### Front end
@@ -80,6 +94,7 @@ When you browse to a website, a few things happen:
 2. GET call on the server: Your computer will make a GET request on the server at that location, on port 443 (for secure websites that start with https://, which is most these days ) or port 80 (for insecure websites that start with http://). Ports are just a way of computers allowing communication for more than one type of thing. There are many ports, and these are the main two most people care about. 
 3. If making a secure call on port 443, there is a process beyond the scope of this tutorial, where you will use a copy of the public key (provided by your browser) as a way of verifying the private key of this site, to ensure that the computer you're talking to is the one that owns that site. This is to eliminate a man-in-the-middle attack, where a malicious site could somehow pretend to be, say, google.com. This is why it's important to only use https sites these days, so that you know that you're communicating with the site you think you are. 
 4. Your browser will now download the html from that server, and any css or js referenced in that html. 
+5. Now that the page is loaded, any js that was also loaded will run. In the case of an SPA (single page app), your app will begin making calls to your backend layer, to load data into your app. We call this process [hydrating](https://en.wikipedia.org/wiki/Hydration_(web_development)) the app. 
 
 #### Html
 
@@ -134,7 +149,27 @@ The back end will wait for request from the front end to do stuff. This is typic
 
 This part will not include code. You'll set up your DB, and connect to it from your back end. 
 
-## Man, this is so interesting! Tell me more. How do I literally do this?
+## Man, this is so interesting!
+
+It's time to learn a little about the cloud. Your code needs to go somewhere. You don't own traditional (bare-metal) servers. if you did, they would cost tens of thousands of dollars each. You would need several of them. You would need someplace with strong air condition, security, and a high-bandwidth internet connection to put them. You would need to order them ahead of time and wait weeks or months. You'd have to anticipate how many you need. Too many, you waste money. Too few, your app can't meet demand. 
+
+Or, you spend a couple dollars and spin up cloud resources. Cloud resources sit in secure locations, with armed guards, powerful air conditioning, a reliable power supply from a power company that has agreements with the facility, and fast fiber internet connections that are laid strategically. In the case of AWS, there are several regions (e.g., us-east-1, us-east-2, us-west-1, etc), each of which has several Availability Zones, which are the actual buildings that contain what you need. 
+
+And for an affordable amount of money, you can request servers, or cloud services, do give you want you want right now. For example, we will be using a service called [Lambda](https://aws.amazon.com/lambda/pricing/), which will allow you to make one million calls for 20 cents. If you're wondering, you will probably not make more than a few dozen calls with this tutorial, so I don't think you'll be missing any meals to pay for this (also, you hopefully have a free-tier educational account and will be paying nothing). 
+
+So, here's our stack, from top (front end) to bottom (data):
+
+- [S3 Buckets](https://aws.amazon.com/s3/): Cheap file storage. A cheap and easy way of serving our SPA web app
+- [API Gateway](https://aws.amazon.com/api-gateway/): Endpoints. Provides endpoints that our SPA app can call to get and update data
+- [Lambda](https://aws.amazon.com/lambda/): Arbitrary serverless code. Hides behind API Gateway, and actually runs the code on those endpoints
+- [IAM](https://aws.amazon.com/iam/): Identity and access management. This is mostly abstracted out to you, but limits the permissions your lambda has for security purposes. Be aware that it exists if you continue learning about cloud. 
+- [Dynamo](https://aws.amazon.com/dynamodb): Nosql database. Where we save our data
+
+You will notice we don't have anything that resembles a traditional server here. That is called [EC2](https://aws.amazon.com/ec2). We will be avoiding this, as we're taking a serverless approach, which is more modern, and more likely to be where your careers take you. If you ever become comfortable with learning Linux, you will use ec2s more. 
+
+You might also notice that there are a lot of pieces, each only doing one distinct thing. This is a common modern software concept called the [single responsibility principle](https://en.wikipedia.org/wiki/Single-responsibility_principle). That is, do one thing very well instead of doing too many things poorly. S3 buckets are used for things besides hosting web apps. Lambdas don't have to serve as endpoints. Different combinations of these services, and others, can be used to solve different problems than our web app example. 
+
+TODO: I probably need to give an intro to cloud9. Users won't have Admin on their computers or now how to use linux or any of that, which they'll need to deploy all this stuff. Consider another README that gets them started on cloud9, so they can get started. But the list of things is ... piling up. 
 
 TODO: 
 
@@ -142,7 +177,7 @@ TODO:
 - [x] Deploy dynamo
 - [x] Deploy hello world lambdas and API Gateway
 - [x] Iterate lambdas to touch Dynamo
-- [ ] Add 3 s3 buckets for front end examples
+- [ ] Add 3 s3 buckets to host front end examples
 - [ ] Create Angular hello world
 - [ ] Create Vue hello world
 - [ ] Create React hello world
